@@ -99,83 +99,253 @@ Core Orchestration Layer
 
 ## Agent 設計
 
-### Paper Agent
-負責論文搜尋、PDF parsing、摘要、方法/結果提取與硬體特徵抽取。
-輸出內容可直接進入 Knowledge Base 與 Research Workflow。
+### 📄 Paper Agent
 
-### Research Agent
-負責主題探索、Survey 生成、Research Gap 分析與研究方向規劃。
-可整合論文、筆記、實驗結果與課程知識，幫助形成研究路線圖。
+#### Responsibility
+Responsible for paper search, PDF parsing, summarization, method/result extraction, and hardware feature extraction.
 
-### Coding Agent
-負責 repo 修改、debug、test execution、commit 建議與工作流執行。  
-建議以 OpenHands 為主要執行引擎，輔以其他 coding tools。
+Outputs are directly fed into:
+- Knowledge Base (Qdrant)
+- Research Workflow (LangGraph / Core Engine)
 
-### Experiment Agent
-負責 training automation、metrics logging、experiment comparison 與 report generation。
-可用 MLflow 作為主要追蹤後端。
+#### Tools Used
+- ArXiv API
+- Semantic Scholar API
+- Crossref API
+- PyMuPDF (PDF parsing)
+- Docling / Marker (document structuring)
+- PaperQA2 (QA over papers)
+- OpenAI / LLM (summarization + extraction)
 
-### Hardware Agent
-這是本專案的核心差異化模組，目標是提供 AI Accelerator / FPGA 研究所需的硬體分析能力。
+#### Outputs
+- Structured paper summary
+- Method breakdown
+- Experimental results extraction
+- Hardware-relevant metadata
 
-#### 子模組
+---
+
+### 🧠 Research Agent
+
+#### Responsibility
+Handles topic exploration, survey generation, research gap analysis, and research roadmap planning.
+
+Integrates:
+- Papers
+- Notes
+- Experiment results
+- Course knowledge
+
+#### Tools Used
+- Open Deep Research
+- LangGraph (workflow orchestration)
+- Qdrant (retrieval memory)
+- LLM (survey synthesis)
+- Notion API (optional export)
+
+#### Outputs
+- Survey report
+- Research gap analysis
+- Research roadmap
+- Direction recommendations
+
+---
+
+### 💻 Coding Agent
+
+#### Responsibility
+Responsible for repository modification, debugging, test execution, commit suggestions, and workflow automation.
+
+#### Tools Used
+- OpenHands (primary execution engine)
+- Aider (lightweight coding assistant)
+- GitHub API
+- Docker
+- PyTest / unittest
+- VSCode Remote / CLI tools
+
+#### Outputs
+- Code patches
+- Git commits / PR suggestions
+- Debug reports
+- Automated test results
+
+---
+
+### 🧪 Experiment Agent
+
+#### Responsibility
+Handles training automation, metrics logging, experiment comparison, and report generation.
+
+#### Tools Used
+- MLflow (primary tracking system)
+- Weights & Biases (optional)
+- PyTorch
+- TensorBoard
+- Hydra / config systems
+
+#### Outputs
+- Experiment logs
+- Training reports
+- Model comparison tables
+- Performance analysis
+
+---
+
+### ⚙️ Hardware Agent
+
+#### Responsibility
+Core differentiation module for AI Accelerator / FPGA research.
+
+Provides hardware-aware analysis for:
+- Quantization effects
+- Pruning efficiency
+- FPGA mapping estimation
+- RTL / HLS cost modeling
+
+---
+
+#### Submodules
 - Quantization Agent
 - Pruning Agent
 - FPGA Estimation Agent
-- RTL / HLS Agent
+- RTL / HLS Analysis Agent
 
-#### 輸入
-- Model
-- Precision
-- Hardware Target
+---
 
-#### 輸出
-- Latency
-- LUT / DSP / BRAM
-- Power
+#### Inputs
+- Model architecture (e.g., Transformer, CNN)
+- Precision (FP32 / INT8 / INT4)
+- Hardware target (FPGA / ASIC / GPU)
+
+---
+
+#### Outputs
+- Latency estimation
+- LUT usage
+- DSP usage
+- BRAM usage
+- Power estimation
 - Memory footprint
 
-### Writing Agent
-負責 paper draft、technical report、email 與會議紀錄撰寫。
+---
 
-### Knowledge Agent
-負責 semantic retrieval、knowledge graph 與 research memory 管理。
+#### Tools Used
+- TorchAO
+- BitsAndBytes
+- Intel Neural Compressor
+- Vivado (FPGA synthesis reference)
+- Vitis HLS / Intel HLS
+- Verilator (RTL simulation)
+- Custom regression models (Python / sklearn)
 
-### Course Learning Agent
-這是 v3.1 新增的核心模組，目標是把修課變成可結構化、可記憶、可推理的學習系統。
+---
 
-#### 功能
-1. Lecture Understanding
-   - 投影片解析
-   - 課堂重點摘要
-   - 教授強調內容提取
+### ✍️ Writing Agent
 
-2. Concept Decomposition
-   - Definition
-   - Intuition
-   - Formula
-   - Example
-   - Pitfall
+#### Responsibility
+Generates academic writing, technical reports, emails, and meeting notes.
 
-3. Exam Pattern Analysis
-   - 歷年考題分析
-   - 題型分類
-   - 出題權重估計
+#### Tools Used
+- LLM (GPT / Claude / local models)
+- Notion API
+- Markdown / LaTeX tools
+- Pandoc (document export)
 
-4. Practice Generator
-   - 類題生成
-   - 進階題目
-   - 觀念陷阱題
+#### Outputs
+- Paper drafts
+- Technical reports
+- Meeting notes
+- Email drafts
 
-5. Review Scheduler
-   - spaced repetition
-   - 自動複習提醒
-   - 重點回顧卡片
+---
 
-6. Exam Survival Mode
-   - 一頁公式整理
-   - high yield topics
-   - quick cheat sheet
+### 🧠 Knowledge Agent
+
+#### Responsibility
+Handles semantic retrieval, knowledge graph construction, and long-term research memory management.
+
+#### Tools Used
+- Qdrant (vector database)
+- PostgreSQL (structured metadata)
+- Redis (cache / short-term memory)
+- Optional: Neo4j (knowledge graph)
+
+#### Outputs
+- Semantic search results
+- Knowledge graph relations
+- Research memory embeddings
+- Cross-document linking
+
+---
+
+### 📘 Course Learning Agent
+
+#### Responsibility
+Transforms academic courses into structured, retrievable, and exam-oriented knowledge systems.
+
+---
+
+#### Core Functions
+
+##### 1. Lecture Understanding
+- Slides / notes parsing
+- Key concept extraction
+- Formula identification
+
+##### 2. Concept Decomposition
+Breaks concepts into:
+
+Definition → Intuition → Formula → Example → Pitfall
+
+##### 3. Exam Pattern Analysis
+- Past exam analysis
+- Question type clustering
+- Topic weighting estimation
+
+##### 4. Practice Generation
+- Similar questions
+- Progressive difficulty questions
+- Concept trap questions
+
+##### 5. Review Scheduler
+- Spaced repetition system
+- Auto reminders
+- Summary cards generation
+
+##### 6. Exam Survival Mode
+- One-page formula sheet
+- High-yield concepts
+- Quick revision notes
+
+---
+
+#### Tools Used
+- PyMuPDF (slides parsing)
+- Whisper (optional lecture transcription)
+- LLM (concept extraction + synthesis)
+- Qdrant (memory storage)
+- Notion API (course organization)
+- n8n (reminder automation)
+
+---
+
+#### Outputs
+- Structured lecture notes
+- Exam preparation sheets
+- Concept breakdown graphs
+- Practice problem sets
+- Revision schedules
+
+---
+
+### 🔗 System Integration
+
+All agents interact through:
+
+- Core Orchestration Layer (PilotDeck / LangGraph / Custom Core)
+- MCP Tool Protocols
+- Shared Memory Layer (Qdrant + PostgreSQL + Redis)
 
 ---
 
