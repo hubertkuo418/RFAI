@@ -1,15 +1,15 @@
-# ResearchForge AI Lab v3.1
+# ResearchForge AI Lab
 
 > 可替換核心架構的個人 AI 研究 + 學習操作系統  
 > Pluggable AI Research & Learning Operating System for AI Accelerator & Transformer Hardware Research
 
-ResearchForge AI Lab v3.1 是一套面向研究生與 AI 工程實作的個人 AI 作業系統，目標是把「文獻調研、課程學習、程式開發、實驗管理、硬體分析」整合成一條可自動化、可記憶、可擴充的研究工作流。[web:42][web:44][web:5]
+ResearchForge AI Lab是一套面向研究生與 AI 工程實作的個人 AI 作業系統，目標是把「文獻調研、課程學習、程式開發、實驗管理、硬體分析」整合成一條可自動化、可記憶、可擴充的研究工作流。
 
 ---
 
 ## 專案目標
 
-本專案希望建立一個可替換核心、可長期累積知識、可串接多種工具的 AI Research & Learning OS，讓研究與修課流程自動化達到 70% 以上。[web:42][web:44][web:51]
+本專案希望建立一個可替換核心、可長期累積知識、可串接多種工具的 AI Research & Learning OS，讓研究與修課流程自動化達到 70% 以上。
 
 ### 主要目標
 
@@ -18,27 +18,27 @@ ResearchForge AI Lab v3.1 是一套面向研究生與 AI 工程實作的個人 A
 - 支援程式修改、測試與版本控制。
 - 支援模型訓練、實驗追蹤與比較。
 - 提供硬體分析能力，估算量化、剪枝、FPGA 相關成本。
-- 新增 Course Learning Agent，強化課程學習與考試準備。[web:5][web:13][web:16][web:18]
+- 新增 Course Learning Agent，強化課程學習與考試準備。
 
 ---
 
 ## 核心特色
 
 ### 1. 可替換 Core
-本專案不綁死單一框架，而是讓核心調度層可替換為 PilotDeck、LangGraph 或自建 Core。[web:42][web:44][web:5]  
-這樣可以根據開發階段、穩定性與需求自由調整，降低整體重構成本。[web:42][web:51]
+本專案不綁死單一框架，而是讓核心調度層可替換為 PilotDeck、LangGraph 或自建 Core。
+這樣可以根據開發階段、穩定性與需求自由調整，降低整體重構成本。
 
 ### 2. Agent 與 Core 解耦
-Agent 專注於能力本身，Core 專注於任務調度與流程編排。[web:5][web:40]  
-這種設計能讓研究、開發、學習、實驗與硬體分析各自獨立演進。[web:42][web:44]
+Agent 專注於能力本身，Core 專注於任務調度與流程編排。
+這種設計能讓研究、開發、學習、實驗與硬體分析各自獨立演進。
 
 ### 3. Memory 作為唯一長期記憶
-系統以 Qdrant、PostgreSQL 與 Redis 組成記憶與資料層，保存論文、筆記、實驗、課程與任務資訊。[web:5][web:43][web:60]  
-透過語義檢索與結構化資料管理，讓系統能跨會話持續累積知識。[web:39][web:42]
+系統以 Qdrant、PostgreSQL 與 Redis 組成記憶與資料層，保存論文、筆記、實驗、課程與任務資訊。  
+透過語義檢索與結構化資料管理，讓系統能跨會話持續累積知識。
 
 ### 4. 所有能力 MCP 化
-透過 MCP 風格的工具介面，把論文搜尋、GitHub 操作、實驗追蹤、硬體分析、課程處理模組化。[web:42][web:44][web:59]  
-這樣能提升系統可維護性，也方便日後擴充新工具。[web:51][web:55]
+透過 MCP 風格的工具介面，把論文搜尋、GitHub 操作、實驗追蹤、硬體分析、課程處理模組化。 
+這樣能提升系統可維護性，也方便日後擴充新工具。
 
 ---
 
@@ -61,13 +61,13 @@ Core Orchestration Layer
 ```
 
 ### 前端層
-- Open WebUI：主要聊天入口、Agent 入口、RAG 查詢、文件上傳。[web:41][web:46]
+- Open WebUI：主要聊天入口、Agent 入口、RAG 查詢、文件上傳。
 - Dashboard：顯示任務狀態、實驗狀態、課程進度與研究追蹤。
 
 ### 核心調度層
-- PilotDeck：適合做 WorkSpace-first 的研究工作區管理與長期記憶。[web:42][web:44][web:47]
-- LangGraph：適合做 stateful workflow、條件分支與多步驟流程控制。[web:5][web:58]
-- Custom Core：若未來需要完全控制，可改用自建調度核心。[web:42][web:51]
+- PilotDeck：適合做 WorkSpace-first 的研究工作區管理與長期記憶。
+- LangGraph：適合做 stateful workflow、條件分支與多步驟流程控制。
+- Custom Core：若未來需要完全控制，可改用自建調度核心。
 
 ### Agent 層
 - Paper Agent
@@ -88,7 +88,7 @@ Core Orchestration Layer
 - Course MCP
 
 ### 記憶層
-- Qdrant：向量記憶與語義檢索。[web:5][web:43][web:60]
+- Qdrant：向量記憶與語義檢索。
 - PostgreSQL：結構化資料管理。
 - Redis：快取與佇列。
 
@@ -100,23 +100,23 @@ Core Orchestration Layer
 ## Agent 設計
 
 ### Paper Agent
-負責論文搜尋、PDF parsing、摘要、方法/結果提取與硬體特徵抽取。[web:11][web:20][web:59]  
-輸出內容可直接進入 Knowledge Base 與 Research Workflow。[web:5][web:39]
+負責論文搜尋、PDF parsing、摘要、方法/結果提取與硬體特徵抽取。
+輸出內容可直接進入 Knowledge Base 與 Research Workflow。
 
 ### Research Agent
-負責主題探索、Survey 生成、Research Gap 分析與研究方向規劃。[web:3][web:5][web:58]  
-可整合論文、筆記、實驗結果與課程知識，幫助形成研究路線圖。[web:42][web:44]
+負責主題探索、Survey 生成、Research Gap 分析與研究方向規劃。
+可整合論文、筆記、實驗結果與課程知識，幫助形成研究路線圖。
 
 ### Coding Agent
-負責 repo 修改、debug、test execution、commit 建議與工作流執行。[web:12][web:18][web:32]  
-建議以 OpenHands 為主要執行引擎，輔以其他 coding tools。[web:12][web:15][web:18]
+負責 repo 修改、debug、test execution、commit 建議與工作流執行。  
+建議以 OpenHands 為主要執行引擎，輔以其他 coding tools。
 
 ### Experiment Agent
-負責 training automation、metrics logging、experiment comparison 與 report generation。[web:13][web:16][web:19]  
-可用 MLflow 作為主要追蹤後端。[web:13][web:16]
+負責 training automation、metrics logging、experiment comparison 與 report generation。
+可用 MLflow 作為主要追蹤後端。
 
 ### Hardware Agent
-這是本專案的核心差異化模組，目標是提供 AI Accelerator / FPGA 研究所需的硬體分析能力。[web:11][web:18]  
+這是本專案的核心差異化模組，目標是提供 AI Accelerator / FPGA 研究所需的硬體分析能力。
 
 #### 子模組
 - Quantization Agent
@@ -136,10 +136,10 @@ Core Orchestration Layer
 - Memory footprint
 
 ### Writing Agent
-負責 paper draft、technical report、email 與會議紀錄撰寫。[web:51][web:55]
+負責 paper draft、technical report、email 與會議紀錄撰寫。
 
 ### Knowledge Agent
-負責 semantic retrieval、knowledge graph 與 research memory 管理。[web:5][web:39][web:43]
+負責 semantic retrieval、knowledge graph 與 research memory 管理。
 
 ### Course Learning Agent
 這是 v3.1 新增的核心模組，目標是把修課變成可結構化、可記憶、可推理的學習系統。
@@ -290,11 +290,6 @@ ResearchForge-AI-Lab/
 - [ ] Dashboard
 - [ ] 全流程整合
 
----
-
-## 一句話總結
-
-這不是 AI assistant，而是一個「研究 + 修課 + 實驗」三合一的個人 AI 作業系統。
 
 ---
 
