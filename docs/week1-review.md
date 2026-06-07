@@ -51,8 +51,9 @@ Python 3.12.13. The shell may still default to the `base` environment unless
 ### PilotDeck
 
 - [x] PilotDeck CLI 可用
-- [x] `pilotdeck/` 專案設定目錄建立
-- [x] `pilotdeck/config.yaml` 建立
+- [x] External PilotDeck repo exists at `/home/hubert/workspace/infra/pilotdeck`
+- [x] External PilotDeck repo remote is `https://github.com/OpenBMB/PilotDeck.git`
+- [x] ResearchForge repo kept separate at `/home/hubert/workspace/ResearchForge-AI-Lab`
 - [x] `configs/pilotdeck.config.yaml` 建立
 - [x] Workspace metadata 建立
 
@@ -112,7 +113,9 @@ docker compose up
 
 ## Fixes Applied During Review
 
-- Added `pilotdeck/` project config structure.
+- Removed the misleading in-repo `pilotdeck/` config directory.
+- Documented PilotDeck as an external infra repo at `/home/hubert/workspace/infra/pilotdeck`.
+- Kept ResearchForge's PilotDeck integration settings in `configs/pilotdeck.config.yaml`.
 - Added GitHub Actions CI smoke workflow.
 - Updated Router to expose `route(task)` for the Day 4 MVP shape.
 - Kept Day 4 route outputs as `paper_agent`, `course_agent`, and `hardware_agent`.

@@ -2,6 +2,10 @@ core:
   name: ResearchForge AI Lab
   router: services/core/router.py
 
+pilotdeck:
+  repo_path: /home/hubert/workspace/infra/pilotdeck
+  remote: https://github.com/OpenBMB/PilotDeck.git
+
 workspaces:
   - name: research
     path: workspaces/research
