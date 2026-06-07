@@ -1,0 +1,12 @@
+services:
+  core:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: researchforge-core
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app

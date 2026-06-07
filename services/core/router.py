@@ -1,9 +1,9 @@
 from typing import Dict
 
 ROUTES = {
-    "research": "paper_agent",
-    "course": "course_agent",
-    "hardware": "hardware_agent"
+    "research": "paper",
+    "course": "course",
+    "hardware": "hardware"
 }
 
 def route(task: Dict):

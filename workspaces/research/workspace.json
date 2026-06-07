@@ -1,8 +1,6 @@
 {
-    "name": "research",
-    "agents": [
-        "paper",
-        "research",
-        "writing"
-    ]
+  "name": "research",
+  "description": "Paper reading, research planning, survey generation",
+  "agents": ["paper", "research", "writing"],
+  "memory_scope": "research"
 }

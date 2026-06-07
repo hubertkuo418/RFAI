@@ -602,7 +602,20 @@ ResearchForge-AI-Lab/
 
 ## 目前狀態
 
-- [ ] Core 架構定義
+- [x] GitHub Repository 建立
+- [x] Repository scaffold 建立
+- [x] README 完成
+- [x] License 完成
+- [x] Python 3.12 researchforge 環境建立
+- [x] Node.js 安裝
+- [x] Core 架構定義
+- [x] Workspace 建立
+- [x] Router 建立
+- [x] API skeleton 建立
+- [x] architecture.md
+- [x] roadmap.md
+- [ ] Docker 安裝 / PATH 驗證
+- [ ] PilotDeck 啟動
 - [ ] Qdrant 初始化
 - [ ] Paper Agent MVP
 - [ ] Course Agent MVP

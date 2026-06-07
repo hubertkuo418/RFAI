@@ -1,7 +1,6 @@
 {
-    "name": "hardware",
-    "agents": [
-        "hardware",
-        "experiment"
-    ]
+  "name": "hardware",
+  "description": "AI accelerator, FPGA, quantization, pruning and latency analysis",
+  "agents": ["hardware", "experiment"],
+  "memory_scope": "hardware"
 }

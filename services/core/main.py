@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-
 from services.api.v1.routes import router
 
 app = FastAPI(
@@ -14,7 +13,7 @@ app.include_router(
 
 @app.get("/")
 def root():
-
     return {
-        "project": "ResearchForge AI Lab"
+        "project": "ResearchForge AI Lab",
+        "status": "running"
     }

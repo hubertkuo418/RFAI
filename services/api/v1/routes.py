@@ -4,7 +4,7 @@ router = APIRouter()
 
 @router.get("/health")
 def health():
-
     return {
-        "status": "ok"
+        "status": "ok",
+        "service": "ResearchForge Core API"
     }
