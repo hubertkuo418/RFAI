@@ -97,115 +97,99 @@ Core Orchestration Layer
 
 ---
 
-## Agent 設計
+## Agent 設計總覽
 
-### 📄 Paper Agent
-
-#### Responsibility
-Responsible for paper search, PDF parsing, summarization, method/result extraction, and hardware feature extraction.
-
-Outputs are directly fed into:
-- Knowledge Base (Qdrant)
-- Research Workflow (LangGraph / Core Engine)
-
-#### Tools Used
-- ArXiv API
-- Semantic Scholar API
-- Crossref API
-- PyMuPDF (PDF parsing)
-- Docling / Marker (document structuring)
-- PaperQA2 (QA over papers)
-- OpenAI / LLM (summarization + extraction)
-
-#### Outputs
-- Structured paper summary
-- Method breakdown
-- Experimental results extraction
-- Hardware-relevant metadata
+本系統由多個可插拔 Agent 組成，透過 Core Orchestration Layer（PilotDeck / LangGraph / Custom Core）進行調度，並以 MCP（Model Context Protocol）統一工具介接。
 
 ---
 
-### 🧠 Research Agent
+## 📄 Paper Agent
 
-#### Responsibility
-Handles topic exploration, survey generation, research gap analysis, and research roadmap planning.
+### 功能
+負責論文搜尋、PDF parsing、摘要、方法/結果提取與硬體特徵抽取。
 
-Integrates:
-- Papers
-- Notes
-- Experiment results
-- Course knowledge
+### 使用工具
+- ArXiv API / Semantic Scholar API
+- PyMuPDF（PDF解析）
+- Docling / Marker（結構化文件解析）
+- PaperQA2（論文問答）
+- OpenAI / LLM API（摘要與抽取）
+- Qdrant（向量化存儲）
 
-#### Tools Used
+### 輸出
+- Reading Notes
+- Structured Paper Summary
+- Hardware-related Feature Extraction（如 latency / bit-width / complexity）
+
+---
+
+## 🧠 Research Agent
+
+### 功能
+負責主題探索、Survey 生成、Research Gap 分析與研究方向規劃。
+
+### 使用工具
 - Open Deep Research
-- LangGraph (workflow orchestration)
-- Qdrant (retrieval memory)
-- LLM (survey synthesis)
-- Notion API (optional export)
+- LangGraph（流程控制）
+- ArXiv / Semantic Scholar
+- Qdrant（語意檢索）
+- Notion API（知識同步）
 
-#### Outputs
-- Survey report
-- Research gap analysis
-- Research roadmap
-- Direction recommendations
+### 輸出
+- Research Survey
+- Research Gap Report
+- Research Roadmap
 
 ---
 
-### 💻 Coding Agent
+## 💻 Coding Agent
 
-#### Responsibility
-Responsible for repository modification, debugging, test execution, commit suggestions, and workflow automation.
+### 功能
+負責 repo 修改、debug、test execution、commit 建議與工作流執行。
 
-#### Tools Used
-- OpenHands (primary execution engine)
-- Aider (lightweight coding assistant)
+### 使用工具
+- OpenHands（主要執行引擎）
+- Aider（輔助 code editing）
 - GitHub API
 - Docker
-- PyTest / unittest
-- VSCode Remote / CLI tools
+- PyTest / Unittest
+- VSCode Server（可選）
 
-#### Outputs
-- Code patches
-- Git commits / PR suggestions
-- Debug reports
-- Automated test results
+### 輸出
+- Git Commit
+- Pull Request
+- Debug Report
+- Code Refactor Suggestions
 
 ---
 
-### 🧪 Experiment Agent
+## 🧪 Experiment Agent
 
-#### Responsibility
-Handles training automation, metrics logging, experiment comparison, and report generation.
+### 功能
+負責 training automation、metrics logging、experiment comparison 與 report generation。
 
-#### Tools Used
-- MLflow (primary tracking system)
-- Weights & Biases (optional)
+### 使用工具
 - PyTorch
+- MLflow（實驗追蹤核心）
+- Weights & Biases（可選）
 - TensorBoard
-- Hydra / config systems
+- Python training scripts
 
-#### Outputs
-- Experiment logs
-- Training reports
-- Model comparison tables
-- Performance analysis
-
----
-
-### ⚙️ Hardware Agent
-
-#### Responsibility
-Core differentiation module for AI Accelerator / FPGA research.
-
-Provides hardware-aware analysis for:
-- Quantization effects
-- Pruning efficiency
-- FPGA mapping estimation
-- RTL / HLS cost modeling
+### 輸出
+- Training Logs
+- Experiment Comparison Table
+- Performance Report
 
 ---
 
-#### Submodules
+## ⚙️ Hardware Agent（核心差異化模組）
+
+### 功能
+提供 AI Accelerator / FPGA / RTL / HLS 研究所需的硬體分析能力。
+
+---
+
+### 子模組
 - Quantization Agent
 - Pruning Agent
 - FPGA Estimation Agent
@@ -213,139 +197,115 @@ Provides hardware-aware analysis for:
 
 ---
 
-#### Inputs
-- Model architecture (e.g., Transformer, CNN)
-- Precision (FP32 / INT8 / INT4)
-- Hardware target (FPGA / ASIC / GPU)
+### 輸入
+- Model Architecture（如 Transformer / CNN）
+- Precision（FP32 / INT8 / INT4）
+- Hardware Target（GPU / FPGA / ASIC）
 
 ---
 
-#### Outputs
-- Latency estimation
-- LUT usage
-- DSP usage
-- BRAM usage
-- Power estimation
-- Memory footprint
+### 輸出
+- Latency Estimation
+- LUT / DSP / BRAM usage
+- Power Estimation
+- Memory Footprint
+- Hardware Cost Report
 
 ---
 
-#### Tools Used
+### 使用工具
 - TorchAO
 - BitsAndBytes
-- Intel Neural Compressor
-- Vivado (FPGA synthesis reference)
-- Vitis HLS / Intel HLS
-- Verilator (RTL simulation)
-- Custom regression models (Python / sklearn)
+- ONNX Runtime
+- Vivado / Vitis（FPGA toolchain）
+- Verilator（RTL simulation）
+- Python regression model
+- HuggingFace Transformers
 
 ---
 
-### ✍️ Writing Agent
+## ✍️ Writing Agent
 
-#### Responsibility
-Generates academic writing, technical reports, emails, and meeting notes.
+### 功能
+負責 paper draft、technical report、email 與會議紀錄撰寫。
 
-#### Tools Used
-- LLM (GPT / Claude / local models)
+### 使用工具
+- OpenAI / LLM API
 - Notion API
-- Markdown / LaTeX tools
-- Pandoc (document export)
+- Markdown / LaTeX
+- Zotero（reference management）
 
-#### Outputs
-- Paper drafts
-- Technical reports
-- Meeting notes
-- Email drafts
-
----
-
-### 🧠 Knowledge Agent
-
-#### Responsibility
-Handles semantic retrieval, knowledge graph construction, and long-term research memory management.
-
-#### Tools Used
-- Qdrant (vector database)
-- PostgreSQL (structured metadata)
-- Redis (cache / short-term memory)
-- Optional: Neo4j (knowledge graph)
-
-#### Outputs
-- Semantic search results
-- Knowledge graph relations
-- Research memory embeddings
-- Cross-document linking
+### 輸出
+- Research Paper Draft
+- Technical Report
+- Meeting Notes
+- Email Draft
 
 ---
 
-### 📘 Course Learning Agent
+## 🧠 Knowledge Agent
 
-#### Responsibility
-Transforms academic courses into structured, retrievable, and exam-oriented knowledge systems.
+### 功能
+負責 semantic retrieval、knowledge graph 與 research memory 管理。
 
----
+### 使用工具
+- Qdrant（向量資料庫）
+- PostgreSQL（結構化資料）
+- Redis（cache / message queue）
+- Notion API
+- Neo4j（可選 knowledge graph）
 
-#### Core Functions
-
-##### 1. Lecture Understanding
-- Slides / notes parsing
-- Key concept extraction
-- Formula identification
-
-##### 2. Concept Decomposition
-Breaks concepts into:
-
-Definition → Intuition → Formula → Example → Pitfall
-
-##### 3. Exam Pattern Analysis
-- Past exam analysis
-- Question type clustering
-- Topic weighting estimation
-
-##### 4. Practice Generation
-- Similar questions
-- Progressive difficulty questions
-- Concept trap questions
-
-##### 5. Review Scheduler
-- Spaced repetition system
-- Auto reminders
-- Summary cards generation
-
-##### 6. Exam Survival Mode
-- One-page formula sheet
-- High-yield concepts
-- Quick revision notes
+### 輸出
+- Semantic Search Results
+- Knowledge Graph Relations
+- Research Memory Retrieval
 
 ---
 
-#### Tools Used
-- PyMuPDF (slides parsing)
-- Whisper (optional lecture transcription)
-- LLM (concept extraction + synthesis)
-- Qdrant (memory storage)
-- Notion API (course organization)
-- n8n (reminder automation)
+## 📘 Course Learning Agent
+
+### 功能
+將修課轉換為結構化、可記憶、可推理的學習系統。
 
 ---
 
-#### Outputs
-- Structured lecture notes
-- Exam preparation sheets
-- Concept breakdown graphs
-- Practice problem sets
-- Revision schedules
+### 核心能力
+- Lecture Understanding（投影片解析）
+- Concept Decomposition（概念拆解）
+- Exam Pattern Analysis（考試分析）
+- Practice Generation（題目生成）
+- Review Scheduling（複習系統）
+- Exam Survival Mode（考前總整理）
 
 ---
 
-### 🔗 System Integration
+### 使用工具
+- PyMuPDF（lecture PDF parsing）
+- Whisper / ASR（課堂錄音轉文字）
+- LLM（概念整理）
+- Qdrant（課程記憶）
+- Notion API（筆記同步）
+- n8n（排程與提醒）
 
-All agents interact through:
+---
 
-- Core Orchestration Layer (PilotDeck / LangGraph / Custom Core)
-- MCP Tool Protocols
-- Shared Memory Layer (Qdrant + PostgreSQL + Redis)
+### 輸出
+- Lecture Summary Notes
+- Concept Breakdown Sheets
+- Exam Prediction Report
+- Practice Questions
+- Final Exam Cheat Sheet
+
+---
+
+## 🧩 系統整合關係
+
+所有 Agent 均透過 MCP 與 Core 互動：
+
+Paper → Research → Knowledge → Writing  
+Course → Knowledge → Exam Preparation  
+Coding → Experiment → Hardware  
+Hardware → Research Feedback Loop  
 
 ---
 
