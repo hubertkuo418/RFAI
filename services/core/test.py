@@ -1,3 +1,8 @@
 from router import route
 
-print(route("research"))
+task = {
+    "workspace": "research",
+    "query": "Transformer Quantization"
+}
+
+print(route(task))

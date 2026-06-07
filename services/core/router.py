@@ -1,12 +1,16 @@
-def route(workspace: str):
+from typing import Dict
 
-    if workspace == "research":
-        return "paper_agent"
+ROUTES = {
+    "research": "paper_agent",
+    "course": "course_agent",
+    "hardware": "hardware_agent"
+}
 
-    elif workspace == "course":
-        return "course_agent"
+def route(task: Dict):
 
-    elif workspace == "hardware":
-        return "hardware_agent"
+    workspace = task.get("workspace")
 
-    return "unknown"
+    return ROUTES.get(
+        workspace,
+        "unknown_agent"
+    )
