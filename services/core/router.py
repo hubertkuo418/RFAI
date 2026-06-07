@@ -1,16 +1,14 @@
-from typing import Dict
 
-ROUTES = {
-    "research": "paper",
-    "course": "course",
-    "hardware": "hardware"
-}
 
-def route(task: Dict):
+def route_task(workspace: str):
 
-    workspace = task.get("workspace")
+    if workspace == "research":
+        return "paper_agent"
 
-    return ROUTES.get(
-        workspace,
-        "unknown_agent"
-    )
+    elif workspace == "course":
+        return "course_agent"
+
+    elif workspace == "hardware":
+        return "hardware_agent"
+
+    return "assistant_agent"
