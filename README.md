@@ -309,35 +309,215 @@ Hardware → Research Feedback Loop
 
 ---
 
-## 開發時程
+# 開發時程
+## 🟦 Week 1｜專案骨架 + Core 雛形
+### 🎯 目標
+把整個 AI OS 的「地基」先建起來
 
-### Phase 1（週 1–2）
-- Core setup
-- Qdrant
-- Paper Agent
-- Course Agent MVP（lecture summary）
+### 🛠 要做的事
+- 建立 GitHub Repo（含基本 structure）
+- 建立目錄：
+  - core/
+  - agents/
+  - memory/
+  - tools/
+- 決定 Core 架構（LangGraph 推薦）
+- 定義最小 Task Flow：
+  input → agent → output
 
-### Phase 2（週 3–5）
-- Research Agent
-- Course Concept Decomposition
-- Notion integration
-
-### Phase 3（週 6–7）
-- Coding Agent
-- OpenHands
-
-### Phase 4（週 8）
-- Experiment Agent
-- MLflow
-
-### Phase 5（週 9–10）
-- Hardware Agent（核心）
-
-### Phase 6（週 11–12）
-- 完整整合流程：
-  Paper → Course → Survey → Code → Experiment → Hardware → Report
+### 📦 交付物
+- GitHub repo 完成
+- basic architecture diagram（md）
+- empty scaffold project
 
 ---
+
+## 🟦 Week 2｜Memory Layer（Qdrant + DB）
+### 🎯 目標
+建立「長期記憶系統」
+
+### 🛠 要做的事
+- 安裝 Qdrant（local or docker）
+- 建 PostgreSQL schema：
+  - papers
+  - notes
+  - tasks
+- Redis（optional）
+- memory API：
+  - store_memory()
+  - retrieve_memory()
+
+### 📦 交付物
+- Qdrant running
+- memory CRUD API
+- simple vector search demo
+
+---
+
+## 🟦 Week 3｜Paper Agent MVP
+### 🎯 目標
+讓系統可以「讀論文」
+
+### 🛠 要做的事
+- ArXiv API
+- PyMuPDF parsing
+- pipeline：
+  download → extract → summarize
+- Qdrant embedding storage
+
+### 📦 交付物
+- Paper summary generator
+- 10 paper ingestion
+- structured JSON
+
+---
+
+## 🟦 Week 4｜Course Learning Agent MVP
+### 🎯 目標
+讓系統可以「讀課程」
+
+### 🛠 要做的事
+- lecture PDF parsing
+- LLM concept extraction
+- concept breakdown
+- Notion sync
+
+### 📦 交付物
+- lecture summary generator
+- 1 course整理
+- concept map
+
+---
+
+## 🟦 Week 5｜Research Agent
+### 🎯 目標
+開始研究能力
+
+### 🛠 要做的事
+- research pipeline：topic → papers → gap
+- Qdrant semantic search
+- survey generator
+
+### 📦 交付物
+- research survey
+- gap report
+- clustering demo
+
+---
+
+## 🟦 Week 6｜Coding Agent
+### 🎯 目標
+AI 改 code
+
+### 🛠 要做的事
+- GitHub API
+- OpenHands / Aider
+- issue → fix → commit
+- pytest
+
+### 📦 交付物
+- auto commit bot
+- PR generator
+- bug fix demo
+
+---
+
+## 🟦 Week 7｜Experiment Agent
+### 🎯 目標
+實驗管理系統
+
+### 🛠 要做的事
+- MLflow setup
+- metrics logging
+- experiment compare
+
+### 📦 交付物
+- MLflow dashboard
+- training logs
+- comparison report
+
+---
+
+## 🟦 Week 8｜Course Exam System
+### 🎯 目標
+考試化課程系統
+
+### 🛠 要做的事
+- exam pattern extraction
+- practice generator
+- review scheduler
+
+### 📦 交付物
+- mock exam
+- cheat sheet
+- review system
+
+---
+
+## 🟦 Week 9｜Hardware Agent
+### 🎯 目標
+AI + Hardware 核心
+
+### 🛠 要做的事
+- Transformer parsing
+- quantization analysis
+- latency estimation
+
+### 📦 交付物
+- model cost report
+- INT8 vs FP16
+- latency estimator
+
+---
+
+## 🟦 Week 10｜FPGA / RTL
+### 🎯 目標
+硬體進階
+
+### 🛠 要做的事
+- ONNX export
+- Verilator simulation
+- hardware cost model
+
+### 📦 交付物
+- FPGA report
+- RTL demo
+- profiling tool
+
+---
+
+## 🟦 Week 11｜Full Integration
+### 🎯 目標
+整合系統
+
+### 🛠 要做的事
+- Paper → Research → Writing
+- Course → Exam prep
+- Code → Experiment → Hardware
+- MCP integration
+
+### 📦 交付物
+- end-to-end workflow
+- unified agent router
+- system API
+
+---
+
+## 🟦 Week 12｜Dashboard + OS
+### 🎯 目標
+完成 AI OS
+
+### 🛠 要做的事
+- Open WebUI
+- dashboard（tasks / papers / experiments）
+- n8n automation
+
+### 📦 交付物
+- Research OS v1
+- dashboard UI
+- automation pipeline
+
+"""
 
 ## 預期成果
 
