@@ -310,214 +310,227 @@ Hardware → Research Feedback Loop
 ---
 
 # 開發時程
-## 🟦 Week 1｜專案骨架 + Core 雛形
-### 🎯 目標
-把整個 AI OS 的「地基」先建起來
+## 🧠 系統核心
+PilotDeck（WorkSpace-centric Agent OS）
 
-### 🛠 要做的事
-- 建立 GitHub Repo（含基本 structure）
-- 建立目錄：
-  - core/
-  - agents/
-  - memory/
-  - tools/
-- 決定 Core 架構（LangGraph 推薦）
-- 定義最小 Task Flow：
-  input → agent → output
-
-### 📦 交付物
-- GitHub repo 完成
-- basic architecture diagram（md）
-- empty scaffold project
+### 核心理由
+- WorkSpace 隔離（適合多研究主題）
+- 白盒記憶（可追蹤 + 可修正）
+- 智能路由（節省 token 成本）
+- Always-on agent（可自動執行任務）
+- MCP 原生支援
 
 ---
 
-## 🟦 Week 2｜Memory Layer（Qdrant + DB）
-### 🎯 目標
-建立「長期記憶系統」
+# 🟦 Week 1｜專案骨架 + PilotDeck 初始化
+## 🎯 目標
+建立 AI OS 地基 + PilotDeck workspace
 
-### 🛠 要做的事
-- 安裝 Qdrant（local or docker）
-- 建 PostgreSQL schema：
-  - papers
-  - notes
-  - tasks
-- Redis（optional）
-- memory API：
-  - store_memory()
-  - retrieve_memory()
+## 🛠 任務
+- 初始化 GitHub repo
+- 安裝 PilotDeck
+- 建立 WorkSpace：
+  - research
+  - course
+  - hardware
+- 定義 task flow：
+  input → PilotDeck router → agent → output
 
-### 📦 交付物
-- Qdrant running
-- memory CRUD API
-- simple vector search demo
-
----
-
-## 🟦 Week 3｜Paper Agent MVP
-### 🎯 目標
-讓系統可以「讀論文」
-
-### 🛠 要做的事
-- ArXiv API
-- PyMuPDF parsing
-- pipeline：
-  download → extract → summarize
-- Qdrant embedding storage
-
-### 📦 交付物
-- Paper summary generator
-- 10 paper ingestion
-- structured JSON
+## 📦 交付物
+- repo scaffold
+- PilotDeck running
+- workspace 分層完成
 
 ---
 
-## 🟦 Week 4｜Course Learning Agent MVP
-### 🎯 目標
-讓系統可以「讀課程」
+# 🟦 Week 2｜Memory Layer（白盒記憶）
+## 🎯 目標
+建立可追溯 knowledge system
 
-### 🛠 要做的事
-- lecture PDF parsing
-- LLM concept extraction
-- concept breakdown
+## 🛠 任務
+- PilotDeck memory system 啟用
+- 接 Qdrant + PostgreSQL
+- 開啟：
+  - memory trace log
+  - editable memory nodes
+
+## 📦 交付物
+- white-box memory system
+- vector search demo
+- memory dashboard
+
+---
+
+# 🟦 Week 3｜Paper Agent（PilotDeck skill）
+## 🎯 目標
+論文自動閱讀
+
+## 🛠 任務
+- ArXiv pipeline
+- PDF parsing
+- paper → workspace memory
+- skill plugin integration
+
+## 📦 交付物
+- paper ingestion system
+- structured paper notes
+- research workspace
+
+---
+
+# 🟦 Week 4｜Course Agent（課程 Workspace）
+## 🎯 目標
+課程結構化
+
+## 🛠 任務
+- lecture parsing
+- concept extraction
+- exam pattern tagging
 - Notion sync
 
-### 📦 交付物
-- lecture summary generator
-- 1 course整理
-- concept map
+## 📦 交付物
+- course workspace
+- lecture summary system
+- concept graph
 
 ---
 
-## 🟦 Week 5｜Research Agent
-### 🎯 目標
-開始研究能力
+# 🟦 Week 5｜Research Agent（Survey Engine）
+## 🎯 目標
+研究能力
 
-### 🛠 要做的事
-- research pipeline：topic → papers → gap
-- Qdrant semantic search
-- survey generator
+## 🛠 任務
+- topic clustering
+- gap detection
+- survey generation
+- cross-paper reasoning
 
-### 📦 交付物
+## 📦 交付物
 - research survey
 - gap report
-- clustering demo
+- topic map
 
 ---
 
-## 🟦 Week 6｜Coding Agent
-### 🎯 目標
+# 🟦 Week 6｜Coding Agent（PilotDeck Tooling）
+## 🎯 目標
 AI 改 code
 
-### 🛠 要做的事
-- GitHub API
-- OpenHands / Aider
-- issue → fix → commit
-- pytest
+## 🛠 任務
+- GitHub integration
+- issue → fix → PR
+- OpenHands/Aider integration
+- workspace git tracking
 
-### 📦 交付物
-- auto commit bot
+## 📦 交付物
+- auto coding agent
 - PR generator
-- bug fix demo
+- debug system
 
 ---
 
-## 🟦 Week 7｜Experiment Agent
-### 🎯 目標
-實驗管理系統
+# 🟦 Week 7｜Experiment Agent（MLflow）
+## 🎯 目標
+實驗追蹤
 
-### 🛠 要做的事
-- MLflow setup
+## 🛠 任務
+- MLflow integration
 - metrics logging
-- experiment compare
+- experiment comparison
 
-### 📦 交付物
-- MLflow dashboard
+## 📦 交付物
+- experiment dashboard
 - training logs
 - comparison report
 
 ---
 
-## 🟦 Week 8｜Course Exam System
-### 🎯 目標
-考試化課程系統
+# 🟦 Week 8｜Course Exam System
+## 🎯 目標
+考試化學習
 
-### 🛠 要做的事
-- exam pattern extraction
-- practice generator
+## 🛠 任務
+- exam generator
+- practice system
 - review scheduler
 
-### 📦 交付物
-- mock exam
-- cheat sheet
-- review system
+## 📦 交付物
+- mock exams
+- cheat sheets
+- review plan
 
 ---
 
-## 🟦 Week 9｜Hardware Agent
-### 🎯 目標
-AI + Hardware 核心
+# 🟦 Week 9｜Hardware Agent（核心）
+## 🎯 目標
+AI + Hardware
 
-### 🛠 要做的事
-- Transformer parsing
+## 🛠 任務
+- transformer parsing
 - quantization analysis
 - latency estimation
 
-### 📦 交付物
-- model cost report
-- INT8 vs FP16
-- latency estimator
+## 📦 交付物
+- hardware cost report
+- INT8 vs FP16 analysis
+- latency model
 
 ---
 
-## 🟦 Week 10｜FPGA / RTL
-### 🎯 目標
-硬體進階
+# 🟦 Week 10｜FPGA / RTL 模組
+## 🎯 目標
+硬體模擬
 
-### 🛠 要做的事
+## 🛠 任務
 - ONNX export
 - Verilator simulation
-- hardware cost model
+- hardware profiling
 
-### 📦 交付物
+## 📦 交付物
 - FPGA report
 - RTL demo
 - profiling tool
 
 ---
 
-## 🟦 Week 11｜Full Integration
-### 🎯 目標
-整合系統
+# 🟦 Week 11｜Full Integration
+## 🎯 目標
+全系統整合
 
-### 🛠 要做的事
+## 🛠 任務
 - Paper → Research → Writing
-- Course → Exam prep
+- Course → Exam
 - Code → Experiment → Hardware
 - MCP integration
 
-### 📦 交付物
-- end-to-end workflow
-- unified agent router
+## 📦 交付物
+- full pipeline demo
+- unified router
 - system API
 
 ---
 
-## 🟦 Week 12｜Dashboard + OS
-### 🎯 目標
-完成 AI OS
+# 🟦 Week 12｜Dashboard + OS
+## 🎯 目標
+完整 AI OS
 
-### 🛠 要做的事
-- Open WebUI
-- dashboard（tasks / papers / experiments）
+## 🛠 任務
+- PilotDeck UI dashboard
+- task tracking
 - n8n automation
 
-### 📦 交付物
+## 📦 交付物
 - Research OS v1
 - dashboard UI
-- automation pipeline
+- automation system
 
-"""
+---
+
+# 🚀 系統架構
+
+Frontend → PilotDeck Core → WorkSpaces → Agents → MCP Tools → Memory (Qdrant)
+
+---
 
 ## 預期成果
 
