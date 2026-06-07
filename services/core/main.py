@@ -1,9 +1,11 @@
-from fastapi import FastAPI
 from datetime import datetime
 from uuid import uuid4
 
-from models import TaskRequest
-from router import route_task
+from fastapi import FastAPI
+
+from services.core.agent_registry import get_agent
+from services.core.models import TaskRequest
+from services.core.router import route
 
 app = FastAPI(
     title="ResearchForge AI Lab",
@@ -20,22 +22,26 @@ def root():
 
 @app.post("/task")
 def create_task(task: TaskRequest):
+    agent = route(task.model_dump())
+    response = None
 
-    agent = route_task(task.workspace)
+    if agent is not None:
+        response = get_agent(agent).run(task.query)
 
     return {
         "task_id": str(uuid4()),
         "workspace": task.workspace,
         "agent": agent,
         "query": task.query,
+        "response": response,
         "status": "routed",
         "created_at": datetime.utcnow()
     }
-    
-    
+
+
 @app.get("/health")
 def health():
     return {
-        "service":"ResearchForge Core",
-        "status":"healthy"
+        "service": "ResearchForge Core",
+        "status": "healthy"
     }

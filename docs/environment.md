@@ -10,35 +10,35 @@ Required Python version:
 Python 3.12
 ```
 
-Current verified environment:
+Current verified conda environment:
 
-```powershell
-C:\Users\huber\anaconda3\envs\researchforge\python.exe --version
+```bash
+conda run -n researchforge python --version
 ```
 
-Expected:
+Verified:
 
 ```text
-Python 3.12.x
+Python 3.12.13
 ```
 
 ## Activate Environment
 
-If `conda` is available in the shell:
+Activate the project environment before development:
 
-```powershell
+```bash
 conda activate researchforge
 ```
 
-If `conda` is not on `PATH`, use the Anaconda Prompt or run Python directly:
+If the shell has not activated the env, run commands through conda:
 
-```powershell
-C:\Users\huber\anaconda3\envs\researchforge\python.exe
+```bash
+conda run -n researchforge python -m services.core.test_router
 ```
 
 ## Install Dependencies
 
-```powershell
+```bash
 python -m pip install -r requirements.txt
 ```
 
@@ -46,27 +46,28 @@ python -m pip install -r requirements.txt
 
 Router:
 
-```powershell
+```bash
 python -m services.core.test
 ```
 
 Expected:
 
 ```text
-paper
+paper_agent
 ```
 
 FastAPI app import and endpoints:
 
-```powershell
-python -c "from fastapi.testclient import TestClient; from services.core.main import app; c=TestClient(app); print(c.get('/').json()); print(c.get('/api/v1/health').json())"
+```bash
+python -c "from fastapi.testclient import TestClient; from services.core.main import app; c=TestClient(app); print(c.get('/').json()); print(c.get('/health').json()); print(c.post('/task', json={'workspace':'research','query':'Transformer quantization paper'}).json())"
 ```
 
 Expected:
 
 ```text
-{'project': 'ResearchForge AI Lab'}
-{'status': 'ok'}
+{'status': 'running'}
+{'service': 'ResearchForge Core', 'status': 'healthy'}
+...
 ```
 
 ## Tool Checks

@@ -16,3 +16,17 @@ AGENTS = {
     "hardware": HardwareAgent(),
     "experiment": ExperimentAgent(),
 }
+
+AGENT_ALIASES = {
+    "paper_agent": "paper",
+    "research_agent": "research",
+    "writing_agent": "writing",
+    "course_agent": "course",
+    "knowledge_agent": "knowledge",
+    "hardware_agent": "hardware",
+    "experiment_agent": "experiment",
+}
+
+
+def get_agent(agent_name: str):
+    return AGENTS[AGENT_ALIASES.get(agent_name, agent_name)]

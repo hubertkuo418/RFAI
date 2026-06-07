@@ -1,4 +1,4 @@
-from router import route_task
+from services.core.router import route
 
 
 task = {
@@ -6,6 +6,6 @@ task = {
     "query": "Find Transformer quantization papers"
 }
 
-result = route_task(task)
+result = route(task)
 
 print(result)

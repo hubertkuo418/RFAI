@@ -1,14 +1,17 @@
+from typing import Mapping
 
 
-def route_task(workspace: str):
+ROUTES = {
+    "research": "paper_agent",
+    "course": "course_agent",
+    "hardware": "hardware_agent",
+}
 
-    if workspace == "research":
-        return "paper_agent"
 
-    elif workspace == "course":
-        return "course_agent"
+def route(task: Mapping[str, str]) -> str | None:
+    workspace = task.get("workspace")
+    return ROUTES.get(workspace)
 
-    elif workspace == "hardware":
-        return "hardware_agent"
 
-    return "assistant_agent"
+def route_task(workspace: str) -> str | None:
+    return route({"workspace": workspace})
