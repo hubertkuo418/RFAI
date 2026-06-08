@@ -1,641 +1,487 @@
 # ResearchForge AI Lab
 
-> 可替換核心架構的個人 AI 研究 + 學習操作系統  
-> Pluggable AI Research & Learning Operating System for AI Accelerator & Transformer Hardware Research
-
-ResearchForge AI Lab是一套面向研究生與 AI 工程實作的個人 AI 作業系統，目標是把「文獻調研、課程學習、程式開發、實驗管理、硬體分析」整合成一條可自動化、可記憶、可擴充的研究工作流。
+## AI-Driven Research Infrastructure for Accelerator-Oriented Graduate Research
 
 ---
 
-## 專案目標
+# 執行摘要
 
-本專案希望建立一個可替換核心、可長期累積知識、可串接多種工具的 AI Research & Learning OS，讓研究與修課流程自動化達到 70% 以上。
+本計劃旨在建立 **ResearchForge AI Lab**，一套專為研究生設計之 AI 研究基礎設施（Research Infrastructure），整合論文管理、研究探索、課程學習、會議管理、程式開發、實驗追蹤、知識管理以及硬體分析流程。
 
-### 主要目標
+系統以「整合現成工具 + 自行開發核心模組」為主要策略，透過 OpenClaw、n8n、Qdrant、OpenHands、MLflow 等成熟工具建立完整研究工作流，並將開發資源集中於具有研究價值之核心模組。
 
-- 自動搜尋與整理論文，生成 Survey 與 Research Gap。
-- 建立可編輯、可回溯的長期記憶系統。
-- 支援程式修改、測試與版本控制。
-- 支援模型訓練、實驗追蹤與比較。
-- 提供硬體分析能力，估算量化、剪枝、FPGA 相關成本。
-- 新增 Course Learning Agent，強化課程學習與考試準備。
+本計畫預計於八週內完成最小可行產品（MVP），未來可持續擴展為實驗室級研究輔助平台。
 
 ---
 
-## 核心特色
+# 第一章 計畫背景
 
-### 1. 可替換 Core
-本專案不綁死單一框架，而是讓核心調度層可替換為 PilotDeck、LangGraph 或自建 Core。
-這樣可以根據開發階段、穩定性與需求自由調整，降低整體重構成本。
+## 1.1 研究背景
 
-### 2. Agent 與 Core 解耦
-Agent 專注於能力本身，Core 專注於任務調度與流程編排。
-這種設計能讓研究、開發、學習、實驗與硬體分析各自獨立演進。
+大型語言模型與生成式人工智慧快速發展，使研究工作逐漸由單純閱讀論文轉變為：
 
-### 3. Memory 作為唯一長期記憶
-系統以 Qdrant、PostgreSQL 與 Redis 組成記憶與資料層，保存論文、筆記、實驗、課程與任務資訊。  
-透過語義檢索與結構化資料管理，讓系統能跨會話持續累積知識。
+- 文獻探索
+- 知識管理
+- 研究會議
+- 程式開發
+- 模型訓練
+- 硬體部署
 
-### 4. 所有能力 MCP 化
-透過 MCP 風格的工具介面，把論文搜尋、GitHub 操作、實驗追蹤、硬體分析、課程處理模組化。 
-這樣能提升系統可維護性，也方便日後擴充新工具。
+等多流程協同作業。
+
+未來於 TASL Lab 從事 Transformer Accelerator 相關研究時，將同時面對：
+
+- 論文閱讀量快速增加
+- Meeting 資訊碎片化
+- 實驗結果難以追蹤
+- FPGA 開發流程複雜
+- 知識分散於不同工具
+
+等問題。
+
+因此需要建立一套可持續使用之研究基礎設施。
 
 ---
 
-## 系統架構
+## 1.2 問題陳述
+
+### 知識管理問題
+
+- 論文、課程、Meeting 紀錄彼此分離
+- 無法跨來源搜尋
+
+### 研究探索問題
+
+- 新方向搜尋成本高
+- 缺乏統一研究入口
+
+### 會議管理問題
+
+- Meeting 紀錄不完整
+- Action Item 易遺漏
+
+### 開發流程問題
+
+- 程式修改缺乏紀錄
+- 實驗結果難以比較
+
+### 硬體研究問題
+
+- FPGA 資源估算需大量人工計算
+- Accelerator 設計缺乏快速分析工具
+
+---
+
+## 1.3 計畫目標
+
+建立 ResearchForge AI Lab v2，達成以下目標：
+
+1. 建立統一研究知識庫
+2. 建立完整研究工作流
+3. 建立會議智慧管理系統
+4. 建立實驗追蹤平台
+5. 建立硬體分析平台
+6. 建立 FPGA 分析平台
+7. 提升研究效率
+8. 產出具有研究價值之核心模組
+
+---
+
+# 第二章 系統架構設計
+
+## 2.1 整體架構
 
 ```text
-Frontend Layer
-(Open WebUI / Dashboard)
-
-        ↓
-
-Core Orchestration Layer
-(PilotDeck / LangGraph / Custom Core)
-
-        ↓
-
-┌────────────┬────────────┬────────────┐
-│ Agent Layer │ Tool Layer │ Memory Layer│
-└────────────┴────────────┴────────────┘
+                    OpenClaw
+                         │
+                         ▼
+                  ResearchForge
+                         │
+ ┌──────────┬──────────┬──────────┐
+ │          │          │          │
+ ▼          ▼          ▼          ▼
+n8n      Qdrant    OpenHands   MLflow
 ```
 
-### 前端層
-- Open WebUI：主要聊天入口、Agent 入口、RAG 查詢、文件上傳。
-- Dashboard：顯示任務狀態、實驗狀態、課程進度與研究追蹤。
+---
 
-### 核心調度層
-- PilotDeck：適合做 WorkSpace-first 的研究工作區管理與長期記憶。
-- LangGraph：適合做 stateful workflow、條件分支與多步驟流程控制。
-- Custom Core：若未來需要完全控制，可改用自建調度核心。
+## 2.2 ResearchForge Skills
 
-### Agent 層
-- Paper Agent
-- Research Agent
-- Coding Agent
-- Experiment Agent
-- Hardware Agent
-- Writing Agent
-- Knowledge Agent
-- Course Learning Agent
-
-### 工具層
-- ArXiv MCP
-- GitHub MCP
-- MLflow MCP
-- PaperQA MCP
-- Hardware MCP
-- Course MCP
-
-### 記憶層
-- Qdrant：向量記憶與語義檢索。
-- PostgreSQL：結構化資料管理。
-- Redis：快取與佇列。
-
-### 自動化層
-- n8n：每日論文摘要、每週課程複習、考前提醒、研究報告排程。
+```text
+ResearchForge
+├── Memory Skill
+├── Paper Skill
+├── Research Skill
+├── Course Skill
+├── Meeting Skill
+├── Coding Skill
+├── Experiment Skill
+├── Hardware Skill
+└── FPGA Skill
+```
 
 ---
 
-## Agent 設計總覽
+## 2.3 技術堆疊
 
-本系統由多個可插拔 Agent 組成，透過 Core Orchestration Layer（PilotDeck / LangGraph / Custom Core）進行調度，並以 MCP（Model Context Protocol）統一工具介接。
+| 類別 | 技術 |
+|--------|--------|
+| Orchestration | OpenClaw |
+| Workflow | n8n |
+| Memory | Qdrant |
+| Coding | OpenHands、Aider |
+| Experiment | MLflow、TensorBoard |
+| Paper | Zotero、Docling |
+| Learning | NotebookLM、Obsidian、Anki |
+| Core Development | Python |
+| Hardware Analysis | PyTorch、ONNX |
+| FPGA Analysis | Vitis HLS |
 
 ---
 
-## 📄 Paper Agent
+# 第三章 技能模組設計
+
+## 3.1 Memory Skill
 
 ### 功能
-負責論文搜尋、PDF parsing、摘要、方法/結果提取與硬體特徵抽取。
 
-### 使用工具
-- ArXiv API / Semantic Scholar API
-- PyMuPDF（PDF解析）
-- Docling / Marker（結構化文件解析）
-- PaperQA2（論文問答）
-- OpenAI / LLM API（摘要與抽取）
-- Qdrant（向量化存儲）
+建立統一知識管理系統。
 
-### 輸出
-- Reading Notes
-- Structured Paper Summary
-- Hardware-related Feature Extraction（如 latency / bit-width / complexity）
+### 管理內容
 
----
-
-## 🧠 Research Agent
-
-### 功能
-負責主題探索、Survey 生成、Research Gap 分析與研究方向規劃。
-
-### 使用工具
-- Open Deep Research
-- LangGraph（流程控制）
-- ArXiv / Semantic Scholar
-- Qdrant（語意檢索）
-- Notion API（知識同步）
-
-### 輸出
-- Research Survey
-- Research Gap Report
-- Research Roadmap
-
----
-
-## 💻 Coding Agent
-
-### 功能
-負責 repo 修改、debug、test execution、commit 建議與工作流執行。
-
-### 使用工具
-- OpenHands（主要執行引擎）
-- Aider（輔助 code editing）
-- GitHub API
-- Docker
-- PyTest / Unittest
-- VSCode Server（可選）
-
-### 輸出
-- Git Commit
-- Pull Request
-- Debug Report
-- Code Refactor Suggestions
-
----
-
-## 🧪 Experiment Agent
-
-### 功能
-負責 training automation、metrics logging、experiment comparison 與 report generation。
-
-### 使用工具
-- PyTorch
-- MLflow（實驗追蹤核心）
-- Weights & Biases（可選）
-- TensorBoard
-- Python training scripts
-
-### 輸出
-- Training Logs
-- Experiment Comparison Table
-- Performance Report
-
----
-
-## ⚙️ Hardware Agent（核心差異化模組）
-
-### 功能
-提供 AI Accelerator / FPGA / RTL / HLS 研究所需的硬體分析能力。
-
----
-
-### 子模組
-- Quantization Agent
-- Pruning Agent
-- FPGA Estimation Agent
-- RTL / HLS Analysis Agent
-
----
-
-### 輸入
-- Model Architecture（如 Transformer / CNN）
-- Precision（FP32 / INT8 / INT4）
-- Hardware Target（GPU / FPGA / ASIC）
-
----
-
-### 輸出
-- Latency Estimation
-- LUT / DSP / BRAM usage
-- Power Estimation
-- Memory Footprint
-- Hardware Cost Report
-
----
-
-### 使用工具
-- TorchAO
-- BitsAndBytes
-- ONNX Runtime
-- Vivado / Vitis（FPGA toolchain）
-- Verilator（RTL simulation）
-- Python regression model
-- HuggingFace Transformers
-
----
-
-## ✍️ Writing Agent
-
-### 功能
-負責 paper draft、technical report、email 與會議紀錄撰寫。
-
-### 使用工具
-- OpenAI / LLM API
-- Notion API
-- Markdown / LaTeX
-- Zotero（reference management）
-
-### 輸出
-- Research Paper Draft
-- Technical Report
-- Meeting Notes
-- Email Draft
-
----
-
-## 🧠 Knowledge Agent
-
-### 功能
-負責 semantic retrieval、knowledge graph 與 research memory 管理。
-
-### 使用工具
-- Qdrant（向量資料庫）
-- PostgreSQL（結構化資料）
-- Redis（cache / message queue）
-- Notion API
-- Neo4j（可選 knowledge graph）
-
-### 輸出
-- Semantic Search Results
-- Knowledge Graph Relations
-- Research Memory Retrieval
-
----
-
-## 📘 Course Learning Agent
-
-### 功能
-將修課轉換為結構化、可記憶、可推理的學習系統。
-
----
+- Papers
+- Courses
+- Meetings
+- Experiments
+- Hardware Reports
+- FPGA Reports
 
 ### 核心能力
-- Lecture Understanding（投影片解析）
-- Concept Decomposition（概念拆解）
-- Exam Pattern Analysis（考試分析）
-- Practice Generation（題目生成）
-- Review Scheduling（複習系統）
-- Exam Survival Mode（考前總整理）
+
+- 向量搜尋
+- Metadata Search
+- 跨來源搜尋
+- 長期知識保存
 
 ---
 
-### 使用工具
-- PyMuPDF（lecture PDF parsing）
-- Whisper / ASR（課堂錄音轉文字）
-- LLM（概念整理）
-- Qdrant（課程記憶）
-- Notion API（筆記同步）
-- n8n（排程與提醒）
+## 3.2 Paper Skill
+
+### 功能
+
+建立論文管理流程。
+
+### 能力
+
+- 論文收集
+- PDF 解析
+- 摘要生成
+- 文獻搜尋
+- 文獻關聯分析
 
 ---
 
-### 輸出
-- Lecture Summary Notes
-- Concept Breakdown Sheets
-- Exam Prediction Report
-- Practice Questions
-- Final Exam Cheat Sheet
+## 3.3 Research Skill
+
+### 功能
+
+協助研究方向探索。
+
+### 能力
+
+- Survey 建立
+- Research Gap 分析
+- Future Work 建議
+- 新研究方向探索
 
 ---
 
-## 🧩 系統整合關係
+## 3.4 Course Skill
 
-所有 Agent 均透過 MCP 與 Core 互動：
+### 功能
 
-Paper → Research → Knowledge → Writing  
-Course → Knowledge → Exam Preparation  
-Coding → Experiment → Hardware  
-Hardware → Research Feedback Loop  
+建立研究所課程學習系統。
 
----
+### 能力
 
-# 開發時程
-## 🧠 系統核心
-PilotDeck（WorkSpace-centric Agent OS）
-
-### 核心理由
-- WorkSpace 隔離（適合多研究主題）
-- 白盒記憶（可追蹤 + 可修正）
-- 智能路由（節省 token 成本）
-- Always-on agent（可自動執行任務）
-- MCP 原生支援
+- 課程摘要
+- 知識圖譜
+- 問答系統
+- 間隔重複學習
 
 ---
 
-# 🟦 Week 1｜專案骨架 + PilotDeck 初始化
-## 🎯 目標
-建立 AI OS 地基 + PilotDeck workspace
+## 3.5 Meeting Skill
 
-## 🛠 任務
-- 初始化 GitHub repo
-- 安裝 PilotDeck
-- 建立 WorkSpace：
-  - research
-  - course
-  - hardware
-- 定義 task flow：
-  input → PilotDeck router → agent → output
+### 功能
 
-## 📦 交付物
-- repo scaffold
-- PilotDeck running
-- workspace 分層完成
+建立研究會議管理系統。
 
----
+### 支援類型
 
-# 🟦 Week 2｜Memory Layer（白盒記憶）
-## 🎯 目標
-建立可追溯 knowledge system
+- Professor Meeting
+- Lab Meeting
+- Paper Discussion
+- Project Review
+- Technical Meeting
 
-## 🛠 任務
-- PilotDeck memory system 啟用
-- 接 Qdrant + PostgreSQL
-- 開啟：
-  - memory trace log
-  - editable memory nodes
+### 核心能力
 
-## 📦 交付物
-- white-box memory system
-- vector search demo
-- memory dashboard
+- 語音轉文字
+- 會議摘要
+- 決策整理
+- 關鍵字擷取
+- Action Item 生成
+- 待辦事項追蹤
+
+### 輸出內容
+
+- Summary
+- Decisions
+- Tasks
+- Keywords
+- Research Ideas
 
 ---
 
-# 🟦 Week 3｜Paper Agent（PilotDeck skill）
-## 🎯 目標
-論文自動閱讀
+## 3.6 Coding Skill
 
-## 🛠 任務
-- ArXiv pipeline
-- PDF parsing
-- paper → workspace memory
-- skill plugin integration
+### 功能
 
-## 📦 交付物
-- paper ingestion system
-- structured paper notes
-- research workspace
+建立 AI 輔助開發流程。
+
+### 能力
+
+- 程式生成
+- 程式修改
+- 自動測試
+- Pull Request 建立
 
 ---
 
-# 🟦 Week 4｜Course Agent（課程 Workspace）
-## 🎯 目標
-課程結構化
+## 3.7 Experiment Skill
 
-## 🛠 任務
-- lecture parsing
-- concept extraction
-- exam pattern tagging
-- Notion sync
+### 功能
 
-## 📦 交付物
-- course workspace
-- lecture summary system
-- concept graph
+建立實驗管理平台。
+
+### 能力
+
+- 實驗追蹤
+- 指標比較
+- 結果分析
+- 報告生成
 
 ---
 
-# 🟦 Week 5｜Research Agent（Survey Engine）
-## 🎯 目標
-研究能力
+## 3.8 Hardware Skill
 
-## 🛠 任務
-- topic clustering
-- gap detection
-- survey generation
-- cross-paper reasoning
+### 功能
 
-## 📦 交付物
-- research survey
-- gap report
-- topic map
+建立硬體資源分析工具。
 
----
+### 分析內容
 
-# 🟦 Week 6｜Coding Agent（PilotDeck Tooling）
-## 🎯 目標
-AI 改 code
-
-## 🛠 任務
-- GitHub integration
-- issue → fix → PR
-- OpenHands/Aider integration
-- workspace git tracking
-
-## 📦 交付物
-- auto coding agent
-- PR generator
-- debug system
+- Parameter Count
+- Memory Footprint
+- MACs
+- Bandwidth
+- Throughput
+- Latency
 
 ---
 
-# 🟦 Week 7｜Experiment Agent（MLflow）
-## 🎯 目標
-實驗追蹤
+## 3.9 FPGA Skill
 
-## 🛠 任務
-- MLflow integration
-- metrics logging
-- experiment comparison
+### 功能
 
-## 📦 交付物
-- experiment dashboard
-- training logs
-- comparison report
+建立 FPGA 資源分析工具。
 
----
+### 分析內容
 
-# 🟦 Week 8｜Course Exam System
-## 🎯 目標
-考試化學習
-
-## 🛠 任務
-- exam generator
-- practice system
-- review scheduler
-
-## 📦 交付物
-- mock exams
-- cheat sheets
-- review plan
+- DSP
+- BRAM
+- LUT
+- FF
+- Latency
+- Timing
 
 ---
 
-# 🟦 Week 9｜Hardware Agent（核心）
-## 🎯 目標
-AI + Hardware
+# 第四章 自動化工作流
 
-## 🛠 任務
-- transformer parsing
-- quantization analysis
-- latency estimation
-
-## 📦 交付物
-- hardware cost report
-- INT8 vs FP16 analysis
-- latency model
-
----
-
-# 🟦 Week 10｜FPGA / RTL 模組
-## 🎯 目標
-硬體模擬
-
-## 🛠 任務
-- ONNX export
-- Verilator simulation
-- hardware profiling
-
-## 📦 交付物
-- FPGA report
-- RTL demo
-- profiling tool
-
----
-
-# 🟦 Week 11｜Full Integration
-## 🎯 目標
-全系統整合
-
-## 🛠 任務
-- Paper → Research → Writing
-- Course → Exam
-- Code → Experiment → Hardware
-- MCP integration
-
-## 📦 交付物
-- full pipeline demo
-- unified router
-- system API
-
----
-
-# 🟦 Week 12｜Dashboard + OS
-## 🎯 目標
-完整 AI OS
-
-## 🛠 任務
-- PilotDeck UI dashboard
-- task tracking
-- n8n automation
-
-## 📦 交付物
-- Research OS v1
-- dashboard UI
-- automation system
-
----
-
-# 🚀 系統架構
-
-Frontend → PilotDeck Core → WorkSpaces → Agents → MCP Tools → Memory (Qdrant)
-
----
-
-## 預期成果
-
-### 研究效率
-- 文獻整理效率提升約 70%
-- 課程準備效率提升約 60%
-- 實驗管理效率提升約 50%
-
-### 系統成果
-- AI Research OS
-- AI Learning OS
-- 可替換 Core 架構
-- MCP 生態系統
-
-### 研究價值
-- Hardware-aware AI system
-- AI accelerator analysis tool
-- Course-aware knowledge OS
-
----
-
-## 風險與對策
-
-| 風險 | 對策 |
-|---|---|
-| Core 不穩定 | 使用可替換架構，Core 可切換為 PilotDeck / LangGraph / Custom Core |
-| MCP 整合困難 | 採模組化設計，先串接成熟工具 |
-| 時間不足 | 嚴格依 Phase 排程，先完成 MVP |
-| 成本過高 | 採 local model fallback，降低 API 依賴 |
-
----
-
-## 推薦技術棧
-
-- **Core**：PilotDeck / LangGraph / Custom Core
-- **Frontend**：Open WebUI / Next.js / TailwindCSS / shadcn/ui
-- **Memory**：Qdrant / PostgreSQL / Redis
-- **Automation**：n8n
-- **Coding**：OpenHands / Aider
-- **Experiment**：MLflow / W&B / PyTorch
-- **Parsing**：PyMuPDF / Marker / Docling
-- **Hardware**：TorchAO / Torch-Pruning / Vivado / Vitis / Verilator
-
----
-
-## 目錄結構建議
+## 4.1 論文工作流
 
 ```text
-ResearchForge-AI-Lab/
-├── README.md
-├── docs/
-│   ├── architecture.md
-│   ├── roadmap.md
-│   ├── agents/
-│   └── specs/
-├── apps/
-│   ├── dashboard/
-│   ├── webui/
-│   └── workflows/
-├── services/
-│   ├── core/
-│   ├── memory/
-│   ├── mcp/
-│   └── automation/
-└── experiments/
+arXiv
+  ↓
+Docling
+  ↓
+Embedding
+  ↓
+Qdrant
 ```
 
 ---
 
-## 目前狀態
+## 4.2 課程工作流
 
-- [x] GitHub Repository 建立
-- [x] Repository scaffold 建立
-- [x] README 完成
-- [x] License 完成
-- [x] Python 3.12 researchforge 環境建立
-- [x] Node.js 安裝
-- [x] Core 架構定義
-- [x] Workspace 建立
-- [x] Router 建立
-- [x] API skeleton 建立
-- [x] architecture.md
-- [x] roadmap.md
-- [ ] Docker 安裝 / PATH 驗證
-- [ ] PilotDeck 啟動
-- [ ] Qdrant 初始化
-- [ ] Paper Agent MVP
-- [ ] Course Agent MVP
-- [ ] Research Agent
-- [ ] Coding Agent
-- [ ] Experiment Agent
-- [ ] Hardware Agent
-- [ ] Dashboard
-- [ ] 全流程整合
-
+```text
+Course
+  ↓
+NotebookLM
+  ↓
+Obsidian
+  ↓
+Anki
+  ↓
+Qdrant
+```
 
 ---
 
-## License
+## 4.3 Meeting 工作流
 
-MIT License
+```text
+Meeting Audio
+      ↓
+Speech-to-Text
+      ↓
+Meeting Skill
+      ↓
+Memory Skill
+      ↓
+Qdrant
+```
 
 ---
 
-## Contact
+## 4.4 開發工作流
 
-Created by Yu-Hao Kuo  
-For research, learning, and hardware-aware AI workflow development.
+```text
+Issue
+  ↓
+OpenHands
+  ↓
+Test
+  ↓
+Pull Request
+```
+
+---
+
+## 4.5 實驗工作流
+
+```text
+Training
+   ↓
+MLflow
+   ↓
+TensorBoard
+   ↓
+Report
+```
+
+---
+
+# 第五章 八週時程規劃
+
+| 週數 | 階段 | 交付物 |
+|--------|--------|--------|
+| Week 1 | 基礎環境建置 | GitHub Repository、Docker、OpenClaw |
+| Week 2 | Memory Skill | Knowledge Base |
+| Week 3 | Paper Skill | Paper Pipeline |
+| Week 4 | Research Skill + Course Skill | Learning System |
+| Week 5 | Meeting Skill | Meeting Intelligence System |
+| Week 6 | Coding Skill + Experiment Skill | Development Platform |
+| Week 7 | Hardware Skill | Hardware Analyzer |
+| Week 8 | FPGA Skill + 系統整合 | MVP 完成 |
+
+---
+
+# 第六章 資源需求
+
+## 硬體需求
+
+| 項目 | 規格 |
+|--------|--------|
+| CPU | 8 Core 以上 |
+| RAM | 32GB 以上 |
+| GPU | RTX 3090 / 4090 |
+| Storage | 1TB SSD |
+| FPGA | Xilinx Alveo（選配） |
+
+---
+
+## 軟體需求
+
+| 類別 | 工具 |
+|--------|--------|
+| Knowledge Base | Qdrant |
+| Workflow | n8n |
+| Coding | OpenHands、Aider |
+| Experiment | MLflow |
+| Paper | Zotero、Docling |
+| Learning | NotebookLM、Obsidian、Anki |
+
+---
+
+# 第七章 風險管理
+
+| 風險 | 影響 | 緩解措施 |
+|--------|--------|--------|
+| Tool Integration Failure | 中 | 採模組化設計 |
+| Hardware Analyzer 精度不足 | 高 | 建立驗證資料集 |
+| FPGA Toolchain 不穩定 | 高 | 第一版聚焦分析 |
+| Meeting Transcription Error | 中 | 建立人工修正流程 |
+| 開發時間不足 | 高 | 優先完成 MVP |
+
+---
+
+# 第八章 預期成果
+
+## MVP 模組
+
+| 模組 | 狀態 |
+|--------|--------|
+| Memory Skill | 完成 |
+| Paper Skill | 完成 |
+| Research Skill | 完成 |
+| Course Skill | 完成 |
+| Meeting Skill | 完成 |
+| Coding Skill | 完成 |
+| Experiment Skill | 完成 |
+| Hardware Skill | 完成 |
+| FPGA Skill | 完成 |
+
+---
+
+## 核心研究成果
+
+| 項目 | 研究價值 |
+|--------|--------|
+| ResearchForge Memory Schema | 統一知識管理 |
+| Meeting Intelligence Framework | 研究會議智慧管理 |
+| Hardware Analyzer | Accelerator Analysis |
+| FPGA Analyzer | FPGA Design Analysis |
+
+---
+
+# 第九章 評估指標
+
+| 指標 | 目標 |
+|--------|--------|
+| Memory Query Latency | < 500 ms |
+| Search Accuracy | > 85% |
+| Meeting Summary Accuracy | > 90% |
+| Action Item Extraction Accuracy | > 90% |
+| Hardware Analyzer Error | < 10% |
+| FPGA Report Generation | < 5 分鐘 |
+
+---
+
+# 第十章 結論
+
+ResearchForge AI Lab 旨在建立一套完整的研究基礎設施，透過九大 Skill 模組整合研究工作流程，將研究生常見的論文閱讀、課程學習、會議管理、程式開發、實驗追蹤以及硬體分析工作統一納入同一平台。
+
+本計畫以「整合現成工具、聚焦核心創新」為原則，將開發資源集中於 Memory Schema、Meeting Intelligence、Hardware Analyzer 與 FPGA Analyzer 等具有研究價值的模組，最終形成可支援 Transformer Accelerator 研究之 AI 驅動研究平台。

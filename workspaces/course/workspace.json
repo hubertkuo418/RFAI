@@ -1,6 +1,0 @@
-{
-  "name": "course",
-  "description": "Course learning, lecture parsing, exam preparation",
-  "agents": ["course", "knowledge"],
-  "memory_scope": "course"
-}
