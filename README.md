@@ -1,16 +1,20 @@
-# ResearchForge AI Lab
+# ResearchForgeAI
 
-## AI-Driven Research Infrastructure for Accelerator-Oriented Graduate Research
+## An Autonomous Multi-Agent Research Infrastructure for Transformer Accelerator Research
 
 ---
 
 # 執行摘要
 
-本計劃旨在建立 **ResearchForge AI Lab**，一套專為研究生設計之 AI 研究基礎設施（Research Infrastructure），整合論文管理、研究探索、課程學習、會議管理、程式開發、實驗追蹤、知識管理以及硬體分析流程。
+本計畫旨在建立 ResearchForgeAI，一套基於 Hermes Agent Framework 之自主研究代理系統（Autonomous Research Agent System），專為人工智慧加速器（AI Accelerator）與 Transformer 硬體研究所設計。
 
-系統以「整合現成工具 + 自行開發核心模組」為主要策略，透過 OpenClaw、n8n、Qdrant、OpenHands、MLflow 等成熟工具建立完整研究工作流，並將開發資源集中於具有研究價值之核心模組。
+隨著大型語言模型（Large Language Models, LLMs）與生成式人工智慧快速發展，研究工作已逐漸由單純的論文閱讀擴展至文獻探索、知識管理、程式開發、實驗追蹤、會議管理以及硬體分析等多項流程。研究人員必須同時處理大量資訊與複雜工作流，導致研究效率受到限制。
 
-本計畫預計於八週內完成最小可行產品（MVP），未來可持續擴展為實驗室級研究輔助平台。
+本計畫以 Hermes Agent 作為核心平台，結合 Qdrant、OpenHands、MLflow、Docling、Zotero、n8n 與 Vitis HLS 等工具，建立具備長期記憶、技能學習、多代理協作以及自動化工作流能力之研究基礎設施。
+
+系統將聚焦於 Transformer Accelerator 研究情境，透過 Research Agent、Meeting Agent、Coding Agent、Experiment Agent、Hardware Analysis Agent 與 FPGA Analysis Agent 等模組，協助研究生完成從文獻探索到硬體實現之完整研究流程。
+
+本計畫預計於八週內完成最小可行產品（Minimum Viable Product, MVP），並逐步擴展為可支援實驗室級研究之自主研究平台。
 
 ---
 
@@ -18,72 +22,73 @@
 
 ## 1.1 研究背景
 
-大型語言模型與生成式人工智慧快速發展，使研究工作逐漸由單純閱讀論文轉變為：
+近年來大型語言模型與生成式人工智慧技術快速發展，使研究工作模式產生重大變化。
 
-- 文獻探索
-- 知識管理
-- 研究會議
-- 程式開發
-- 模型訓練
-- 硬體部署
+傳統研究流程主要以閱讀論文與撰寫報告為主，而現代研究則涉及：
 
-等多流程協同作業。
+- 文獻搜尋與管理
+- 知識整合與長期保存
+- 研究會議紀錄與追蹤
+- 程式開發與版本管理
+- 模型訓練與實驗分析
+- AI Accelerator 設計與評估
+- FPGA 實作與驗證
 
-未來於 TASL Lab 從事 Transformer Accelerator 相關研究時，將同時面對：
+在 Transformer Accelerator 研究中，研究人員除了需理解演算法與模型架構外，亦需考量硬體資源、記憶體存取、資料流設計以及 FPGA 部署等問題。
 
-- 論文閱讀量快速增加
-- Meeting 資訊碎片化
-- 實驗結果難以追蹤
-- FPGA 開發流程複雜
-- 知識分散於不同工具
-
-等問題。
-
-因此需要建立一套可持續使用之研究基礎設施。
-
----
+因此建立一套整合式研究基礎設施已成為提升研究效率的重要課題。
 
 ## 1.2 問題陳述
 
 ### 知識管理問題
 
-- 論文、課程、Meeting 紀錄彼此分離
-- 無法跨來源搜尋
+- 論文與課程資料分散
+- Meeting 紀錄缺乏整理
+- 難以建立長期知識庫
+- 缺乏跨來源檢索能力
 
 ### 研究探索問題
 
-- 新方向搜尋成本高
-- 缺乏統一研究入口
+- 文獻搜尋成本高
+- Survey 建立耗時
+- Research Gap 難以分析
 
 ### 會議管理問題
 
-- Meeting 紀錄不完整
-- Action Item 易遺漏
+- Meeting 記錄不完整
+- 決策內容易遺失
+- 待辦事項缺乏追蹤
 
-### 開發流程問題
+### 程式開發問題
 
-- 程式修改缺乏紀錄
-- 實驗結果難以比較
+- 程式修改紀錄分散
+- 缺乏 AI 協助開發流程
+- 測試與驗證效率低
+
+### 實驗管理問題
+
+- 超參數管理困難
+- 實驗結果缺乏統一追蹤
+- 報告生成耗時
 
 ### 硬體研究問題
 
-- FPGA 資源估算需大量人工計算
-- Accelerator 設計缺乏快速分析工具
-
----
+- 模型硬體成本估算繁瑣
+- FPGA 資源分析需大量人工操作
+- 缺乏快速設計評估工具
 
 ## 1.3 計畫目標
 
-建立 ResearchForge AI Lab v2，達成以下目標：
+建立 ResearchForgeAI，達成以下目標：
 
-1. 建立統一研究知識庫
-2. 建立完整研究工作流
-3. 建立會議智慧管理系統
-4. 建立實驗追蹤平台
-5. 建立硬體分析平台
-6. 建立 FPGA 分析平台
-7. 提升研究效率
-8. 產出具有研究價值之核心模組
+1. 建立統一研究知識管理平台
+2. 建立自主文獻探索系統
+3. 建立研究會議智慧管理系統
+4. 建立 AI 輔助程式開發系統
+5. 建立實驗追蹤與分析平台
+6. 建立 Accelerator Analysis Framework
+7. 建立 FPGA Analysis Framework
+8. 建立可持續學習之 Research Skill System
 
 ---
 
@@ -92,292 +97,280 @@
 ## 2.1 整體架構
 
 ```text
-                    OpenClaw
-                         │
-                         ▼
-                  ResearchForge
-                         │
- ┌──────────┬──────────┬──────────┐
- │          │          │          │
- ▼          ▼          ▼          ▼
-n8n      Qdrant    OpenHands   MLflow
+                    Hermes Agent
+                           │
+            ┌──────────────┼──────────────┐
+            │              │              │
+            ▼              ▼              ▼
+        Memory         Skills        Automation
+          │               │               │
+          └───────────────┼───────────────┘
+                          │
+                          ▼
+                 Research Coordinator
+                          │
+ ┌──────────┬──────────┬──────────┬──────────┐
+ ▼          ▼          ▼          ▼          ▼
+Paper    Meeting    Coding    Hardware    FPGA
+Agent    Agent      Agent     Agent       Agent
 ```
 
----
+Research Coordinator Agent 作為核心控制單元，負責代理協調、記憶檢索以及工作流管理。
 
-## 2.2 ResearchForge Skills
+## 2.2 系統分層架構
 
-```text
-ResearchForge
-├── Memory Skill
-├── Paper Skill
-├── Research Skill
-├── Course Skill
-├── Meeting Skill
-├── Coding Skill
-├── Experiment Skill
-├── Hardware Skill
-└── FPGA Skill
-```
+### Agent Layer
 
----
+負責任務協調與代理管理。
+
+### Skill Layer
+
+負責技能封裝與技能學習。
+
+### Memory Layer
+
+負責長期知識保存與檢索。
+
+### Tool Layer
+
+負責外部工具整合。
+
+### Automation Layer
+
+負責自動化工作流執行。
 
 ## 2.3 技術堆疊
 
 | 類別 | 技術 |
 |--------|--------|
-| Orchestration | OpenClaw |
+| Agent Framework | Hermes Agent |
 | Workflow | n8n |
-| Memory | Qdrant |
-| Coding | OpenHands、Aider |
-| Experiment | MLflow、TensorBoard |
-| Paper | Zotero、Docling |
-| Learning | NotebookLM、Obsidian、Anki |
-| Core Development | Python |
-| Hardware Analysis | PyTorch、ONNX |
-| FPGA Analysis | Vitis HLS |
+| Memory Database | Qdrant |
+| Knowledge Management | Obsidian |
+| Paper Management | Zotero |
+| PDF Parsing | Docling |
+| Coding Assistant | OpenHands |
+| Experiment Tracking | MLflow |
+| Deep Learning | PyTorch |
+| Hardware Analysis | ONNX |
+| FPGA Development | Vitis HLS |
+| Scheduling | Hermes Cron |
+| MCP Integration | Hermes MCP |
 
 ---
 
-# 第三章 技能模組設計
+# 第三章 Agent 模組設計
 
-## 3.1 Memory Skill
+## 3.1 Memory Agent
 
 ### 功能
 
-建立統一知識管理系統。
+建立長期研究知識庫。
 
 ### 管理內容
 
 - Papers
 - Courses
 - Meetings
+- Projects
 - Experiments
 - Hardware Reports
-- FPGA Reports
 
 ### 核心能力
 
-- 向量搜尋
+- Semantic Search
 - Metadata Search
-- 跨來源搜尋
-- 長期知識保存
+- Knowledge Linking
+- Long-Term Memory
 
----
-
-## 3.2 Paper Skill
+## 3.2 Paper Agent
 
 ### 功能
 
-建立論文管理流程。
+建立論文管理與分析流程。
 
 ### 能力
 
-- 論文收集
+- arXiv 搜尋
 - PDF 解析
-- 摘要生成
-- 文獻搜尋
+- 論文摘要
+- Citation 分析
 - 文獻關聯分析
 
----
-
-## 3.3 Research Skill
+## 3.3 Research Agent
 
 ### 功能
 
-協助研究方向探索。
+研究方向探索。
 
 ### 能力
 
 - Survey 建立
 - Research Gap 分析
-- Future Work 建議
-- 新研究方向探索
+- Future Work 探索
+- Research Roadmap 規劃
 
----
-
-## 3.4 Course Skill
+## 3.4 Meeting Agent
 
 ### 功能
 
-建立研究所課程學習系統。
+研究會議智慧管理。
 
 ### 能力
 
-- 課程摘要
-- 知識圖譜
-- 問答系統
-- 間隔重複學習
+- Speech-to-Text
+- Summary Generation
+- Decision Extraction
+- Action Item Tracking
+- Research Idea Extraction
 
----
-
-## 3.5 Meeting Skill
-
-### 功能
-
-建立研究會議管理系統。
-
-### 支援類型
-
-- Professor Meeting
-- Lab Meeting
-- Paper Discussion
-- Project Review
-- Technical Meeting
-
-### 核心能力
-
-- 語音轉文字
-- 會議摘要
-- 決策整理
-- 關鍵字擷取
-- Action Item 生成
-- 待辦事項追蹤
-
-### 輸出內容
-
-- Summary
-- Decisions
-- Tasks
-- Keywords
-- Research Ideas
-
----
-
-## 3.6 Coding Skill
+## 3.5 Coding Agent
 
 ### 功能
 
-建立 AI 輔助開發流程。
+AI 輔助軟體開發。
 
 ### 能力
 
-- 程式生成
-- 程式修改
-- 自動測試
-- Pull Request 建立
+- Code Generation
+- Code Refactoring
+- Test Generation
+- Pull Request Generation
 
----
-
-## 3.7 Experiment Skill
+## 3.6 Experiment Agent
 
 ### 功能
 
-建立實驗管理平台。
+實驗管理與追蹤。
 
 ### 能力
 
-- 實驗追蹤
-- 指標比較
-- 結果分析
-- 報告生成
+- Hyperparameter Tracking
+- Result Comparison
+- Visualization
+- Report Generation
 
----
-
-## 3.8 Hardware Skill
+## 3.7 Hardware Analysis Agent
 
 ### 功能
 
-建立硬體資源分析工具。
+Transformer Accelerator 分析。
 
 ### 分析內容
 
 - Parameter Count
+- FLOPs
+- MAC Operations
 - Memory Footprint
-- MACs
-- Bandwidth
-- Throughput
-- Latency
+- Bandwidth Requirement
+- Latency Estimation
+- Throughput Estimation
 
----
-
-## 3.9 FPGA Skill
+## 3.8 FPGA Analysis Agent
 
 ### 功能
 
-建立 FPGA 資源分析工具。
+FPGA 資源分析。
 
 ### 分析內容
 
-- DSP
-- BRAM
-- LUT
-- FF
-- Latency
-- Timing
+- DSP Usage
+- BRAM Usage
+- LUT Usage
+- FF Usage
+- Timing Estimation
+- Resource Utilization
 
 ---
 
-# 第四章 自動化工作流
+# 第四章 自動化工作流設計
 
-## 4.1 論文工作流
+## 4.1 Paper Workflow
 
 ```text
 arXiv
-  ↓
+   ↓
 Docling
-  ↓
+   ↓
 Embedding
-  ↓
+   ↓
 Qdrant
+   ↓
+Memory
 ```
 
----
-
-## 4.2 課程工作流
+## 4.2 Course Workflow
 
 ```text
-Course
-  ↓
-NotebookLM
-  ↓
-Obsidian
-  ↓
-Anki
-  ↓
-Qdrant
+Course Material
+      ↓
+Summarization
+      ↓
+Knowledge Graph
+      ↓
+Memory
 ```
 
----
-
-## 4.3 Meeting 工作流
+## 4.3 Meeting Workflow
 
 ```text
 Meeting Audio
       ↓
-Speech-to-Text
+Whisper
       ↓
-Meeting Skill
+Meeting Agent
       ↓
-Memory Skill
+Action Items
       ↓
-Qdrant
+Knowledge Base
 ```
 
----
-
-## 4.4 開發工作流
+## 4.4 Coding Workflow
 
 ```text
 Issue
   ↓
+Coding Agent
+  ↓
 OpenHands
   ↓
-Test
+Testing
   ↓
 Pull Request
 ```
 
----
-
-## 4.5 實驗工作流
+## 4.5 Experiment Workflow
 
 ```text
 Training
    ↓
 MLflow
    ↓
-TensorBoard
+Analysis
+   ↓
+Report
+```
+
+## 4.6 Hardware Workflow
+
+```text
+Model
+  ↓
+ONNX Analysis
+  ↓
+Resource Estimation
+  ↓
+Report
+```
+
+## 4.7 FPGA Workflow
+
+```text
+HLS Design
+   ↓
+Resource Analysis
+   ↓
+Timing Analysis
    ↓
 Report
 ```
@@ -388,14 +381,14 @@ Report
 
 | 週數 | 階段 | 交付物 |
 |--------|--------|--------|
-| Week 1 | 基礎環境建置 | GitHub Repository、Docker、OpenClaw |
-| Week 2 | Memory Skill | Knowledge Base |
-| Week 3 | Paper Skill | Paper Pipeline |
-| Week 4 | Research Skill + Course Skill | Learning System |
-| Week 5 | Meeting Skill | Meeting Intelligence System |
-| Week 6 | Coding Skill + Experiment Skill | Development Platform |
-| Week 7 | Hardware Skill | Hardware Analyzer |
-| Week 8 | FPGA Skill + 系統整合 | MVP 完成 |
+| Week 1 | Hermes 環境建置 | 基礎平台 |
+| Week 2 | Memory Agent | Knowledge Base |
+| Week 3 | Paper Agent | Paper Pipeline |
+| Week 4 | Research Agent | Research Assistant |
+| Week 5 | Meeting Agent | Meeting Intelligence |
+| Week 6 | Coding Agent + Experiment Agent | Development Platform |
+| Week 7 | Hardware Analysis Agent | Accelerator Analyzer |
+| Week 8 | FPGA Analysis Agent + 系統整合 | MVP 完成 |
 
 ---
 
@@ -406,23 +399,22 @@ Report
 | 項目 | 規格 |
 |--------|--------|
 | CPU | 8 Core 以上 |
-| RAM | 32GB 以上 |
-| GPU | RTX 3090 / 4090 |
-| Storage | 1TB SSD |
+| RAM | 32 GB 以上 |
+| GPU | RTX 3090 或以上 |
+| Storage | 1 TB SSD |
 | FPGA | Xilinx Alveo（選配） |
-
----
 
 ## 軟體需求
 
 | 類別 | 工具 |
 |--------|--------|
-| Knowledge Base | Qdrant |
+| Agent Platform | Hermes Agent |
+| Memory | Qdrant |
 | Workflow | n8n |
-| Coding | OpenHands、Aider |
+| Coding | OpenHands |
 | Experiment | MLflow |
+| Knowledge | Obsidian |
 | Paper | Zotero、Docling |
-| Learning | NotebookLM、Obsidian、Anki |
 
 ---
 
@@ -430,40 +422,49 @@ Report
 
 | 風險 | 影響 | 緩解措施 |
 |--------|--------|--------|
-| Tool Integration Failure | 中 | 採模組化設計 |
-| Hardware Analyzer 精度不足 | 高 | 建立驗證資料集 |
-| FPGA Toolchain 不穩定 | 高 | 第一版聚焦分析 |
-| Meeting Transcription Error | 中 | 建立人工修正流程 |
+| Tool Integration Failure | 中 | 模組化架構 |
+| Memory Database Failure | 中 | 定期備份 |
+| Meeting Transcription Error | 中 | 人工校正 |
+| Hardware Estimation Error | 高 | 建立驗證資料集 |
+| FPGA Toolchain Failure | 高 | 初期聚焦分析功能 |
 | 開發時間不足 | 高 | 優先完成 MVP |
 
 ---
 
 # 第八章 預期成果
 
-## MVP 模組
+## MVP 成果
 
-| 模組 | 狀態 |
-|--------|--------|
-| Memory Skill | 完成 |
-| Paper Skill | 完成 |
-| Research Skill | 完成 |
-| Course Skill | 完成 |
-| Meeting Skill | 完成 |
-| Coding Skill | 完成 |
-| Experiment Skill | 完成 |
-| Hardware Skill | 完成 |
-| FPGA Skill | 完成 |
+- Memory Agent
+- Paper Agent
+- Research Agent
+- Meeting Agent
+- Coding Agent
+- Experiment Agent
+- Hardware Analysis Agent
+- FPGA Analysis Agent
 
----
+## 研究成果
 
-## 核心研究成果
+### Research Memory Schema
 
-| 項目 | 研究價值 |
-|--------|--------|
-| ResearchForge Memory Schema | 統一知識管理 |
-| Meeting Intelligence Framework | 研究會議智慧管理 |
-| Hardware Analyzer | Accelerator Analysis |
-| FPGA Analyzer | FPGA Design Analysis |
+建立統一研究知識模型。
+
+### Meeting Intelligence Framework
+
+建立研究會議智慧管理框架。
+
+### Accelerator Analysis Framework
+
+建立 Transformer Accelerator 分析系統。
+
+### FPGA Analysis Framework
+
+建立 FPGA 資源分析系統。
+
+### Autonomous Research Agent Framework
+
+建立自主研究代理架構。
 
 ---
 
@@ -474,14 +475,16 @@ Report
 | Memory Query Latency | < 500 ms |
 | Search Accuracy | > 85% |
 | Meeting Summary Accuracy | > 90% |
-| Action Item Extraction Accuracy | > 90% |
-| Hardware Analyzer Error | < 10% |
-| FPGA Report Generation | < 5 分鐘 |
+| Action Item Accuracy | > 90% |
+| Hardware Estimation Error | < 10% |
+| FPGA Report Generation Time | < 5 分鐘 |
 
 ---
 
 # 第十章 結論
 
-ResearchForge AI Lab 旨在建立一套完整的研究基礎設施，透過九大 Skill 模組整合研究工作流程，將研究生常見的論文閱讀、課程學習、會議管理、程式開發、實驗追蹤以及硬體分析工作統一納入同一平台。
+本計畫提出 ResearchForgeAI，一套基於 Hermes Agent Framework 的自主研究代理系統。
 
-本計畫以「整合現成工具、聚焦核心創新」為原則，將開發資源集中於 Memory Schema、Meeting Intelligence、Hardware Analyzer 與 FPGA Analyzer 等具有研究價值的模組，最終形成可支援 Transformer Accelerator 研究之 AI 驅動研究平台。
+系統透過多代理協作、長期記憶管理、技能學習以及自動化工作流，整合研究生於文獻探索、知識管理、會議管理、程式開發、實驗追蹤以及 Transformer Accelerator 研究所需之核心流程。
+
+未來可進一步結合 FPGA 自動化設計流程、硬體效能預測模型以及 AI Accelerator Co-Design 技術，逐步發展為支援智慧研究之新型研究基礎設施平台。
